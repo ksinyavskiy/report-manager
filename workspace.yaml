@@ -1,0 +1,30 @@
+workspace:
+  name: report-manager
+  vault: ./vault
+
+agents:
+  # Report Agent: creates reports using pre-defined template, analyze them and send to a third party service
+  - id: report-agent
+    role: report-agent
+    peer: mac-local
+    memory_scope: project-global
+    model: claude-haiku-4-5
+    permissions:
+      allow-paths:
+        - ./
+      allow_commands:
+        - "ls *"
+        - "mkdir *"
+        - "java *"
+        - "javac *"
+        - "mvn *"
+      deny_commands:
+        - "rm *"
+        - "sudo *"
+        - "git *"
+        - "gh *"
+        - "docker *"
+      allow_file_delete: false
+      require_approval_for:
+        - bash_script
+      permission_mode: bypassPermissions
