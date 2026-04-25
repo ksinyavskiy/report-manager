@@ -12,7 +12,7 @@ This is not a production monitoring system.
 
 ## Current Stage
 
-Current stage: **Stage 0 complete**.
+Current stage: **Stage 1 complete**.
 
 Stage 0 means:
 
@@ -21,24 +21,30 @@ Stage 0 means:
 - expected outputs are defined;
 - expected tool plans are defined;
 - pytest contract tests validate those files;
-- no real agent implementation exists yet.
 
-Next stage: **Stage 1**.
+Stage 1 means:
 
-Stage 1 goal:
+- fake Grafana data is defined;
+- deterministic tools are implemented;
+- a fake rule-based runner is implemented;
+- runner output exactly matches Stage 0 expected outputs;
+- runner ordered tool trace exactly matches Stage 0 expected tool plans.
 
-- add fake Grafana data;
-- add deterministic tools;
-- add a fake rule-based runner;
-- make the runner output exactly match Stage 0 expected outputs;
-- make the runner ordered tool trace exactly match Stage 0 expected tool plans.
+Next stage: **Stage 2**.
+
+Stage 2 goal:
+
+- add an LLM tool-calling runner;
+- keep deterministic tools unchanged;
+- preserve the public output contract;
+- use mocked/deterministic LLM tests for tool-call behavior.
 
 ## Current Test Status
 
-Stage 0 tests passed:
+Stage 0 + Stage 1 tests passed:
 
 ```text
-52 passed
+72 passed
 ```
 
 Default test command:
@@ -98,7 +104,12 @@ For deeper context, also read:
 - `fixtures/inputs/*.json`
 - `fixtures/expected_outputs/*.json`
 - `fixtures/expected_tool_plans/*.json`
+- `fixtures/fake_grafana/*.json`
+- `src/grafana_agent/tools/*.py`
+- `src/grafana_agent/agent/fake_runner.py`
 - `tests/contract/test_fixture_contract.py`
+- `tests/contract/test_fake_runner_contract.py`
+- `tests/tools/test_tools.py`
 
 ## Default AI Workflow
 
@@ -116,51 +127,51 @@ When a new AI agent starts:
 Use this when asking another agent to review:
 
 ```text
-We are in grafana-agent Stage 0.
-
-Read PROJECT_CONTEXT.md and AGENTS.md first.
-
-Review only the Stage 0 contract/specification work:
-- schemas
-- fixtures
-- expected outputs
-- expected tool plans
-- contract tests
-- docs
-
-Do not implement Stage 1.
-Do not add LLM, Grafana, Prometheus, Docker, or real integrations.
-
-Focus on:
-- contract consistency
-- fixture quality
-- schema correctness
-- test usefulness
-- what should be simplified before Stage 1
-
-Give findings first, ordered by severity.
-```
-
-## Stage 1 Request Template
-
-Use this when starting implementation:
-
-```text
 We are in grafana-agent Stage 1.
 
 Read PROJECT_CONTEXT.md and AGENTS.md first.
 
-Implement a fake deterministic Grafana Agent that passes the existing Stage 0 contract.
-Do not change schemas unless there is a clear contract bug.
-Do not add LLM calls.
-Do not add real Grafana, Prometheus, Docker, or HTTP integrations.
-
-Implement:
+Review the current Stage 1 implementation:
 - fake Grafana fixtures
 - deterministic tools
 - fake rule-based runner
-- tool unit tests
+- manual runner
+- tool tests
 - runner contract tests
+- docs/context
+
+Do not implement Stage 2.
+Do not add LLM, Grafana, Prometheus, Docker, or real integrations.
+
+Focus on:
+- tool and runner correctness
+- contract consistency
+- test usefulness
+- package/import issues
+- what should be fixed before Stage 2
+
+Give findings first, ordered by severity.
+```
+
+## Stage 2 Request Template
+
+Use this when starting implementation:
+
+```text
+We are in grafana-agent Stage 2.
+
+Read PROJECT_CONTEXT.md and AGENTS.md first.
+
+Add an LLM tool-calling Grafana Agent runner.
+Keep all deterministic tools unchanged.
+Do not change output schema.
+Do not add real Grafana, Prometheus, Docker, or HTTP integrations.
+
+Implement:
+- LLM runner interface
+- mocked/fake LLM client tests
+- behavior tests for tool-call sequence
+- contract tests showing output still matches schemas
 
 Run python -m pytest.
 Update PROJECT_CONTEXT.md when done.

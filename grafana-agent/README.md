@@ -25,7 +25,9 @@ The project is intentionally built in stages:
 
 ## Current Stage
 
-Stage 0 defines the public contract:
+Stage 1 is complete.
+
+Stage 0 defined the public contract:
 
 - input schema;
 - output schema;
@@ -35,9 +37,15 @@ Stage 0 defines the public contract:
 - expected tool plans;
 - contract tests that validate the files above.
 
-Stage 0 does not implement an agent yet.
+Stage 1 added:
 
-For v0.1, expected outputs and expected tool plans are exact golden fixtures. Stage 1 should make the fake runner match them exactly.
+- fake Grafana fixtures;
+- deterministic tools;
+- fake rule-based runner;
+- tool tests;
+- runner contract tests.
+
+For v0.1, expected outputs and expected tool plans are exact golden fixtures. The fake runner matches them exactly.
 
 ## Run Tests
 
@@ -54,3 +62,28 @@ python -m pytest -q
 ```
 
 The longer command `python -m pytest -q -p no:cacheprovider` is only useful when you want short output and do not want pytest to create `.pytest_cache`.
+
+## Manual Check
+
+Run the fake agent without pytest:
+
+```powershell
+python run_fake_agent.py latency
+```
+
+Show the ordered tool trace too:
+
+```powershell
+python run_fake_agent.py latency --trace
+```
+
+Available scenarios:
+
+```text
+latency
+errors
+health
+unknown-service
+missing-time-range
+invalid-time-range
+```

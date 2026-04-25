@@ -16,5 +16,5 @@ dev = [
 testpaths = ["tests"]
 pythonpath = ["src"]
 
-[tool.setuptools]
-packages = []
+[tool.setuptools.packages.find]
+where = ["src"]

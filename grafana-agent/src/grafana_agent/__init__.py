@@ -1,0 +1,1 @@
+"""Grafana Agent learning MVP."""
