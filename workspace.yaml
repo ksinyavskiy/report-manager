@@ -10,8 +10,8 @@ agents:
     memory_scope: project-global
     model: claude-haiku-4-5
     permissions:
-      allow-paths:
-        - ./
+      allow_paths:
+        - ./docs
       allow_commands:
         - "ls *"
         - "mkdir *"
