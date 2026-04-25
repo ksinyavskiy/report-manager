@@ -1,20 +1,21 @@
 ---
-role: report-agent
+# unique role id, usually should be the same as the file name
+role: report-assistant
 version: 1.0
 # this config allows to setup how tokens of the app context are going to be distributed 
 context_budget:
-  # how many tokens should be spent on the agent itself, choose the value approximately
+  # how many tokens should be spent on the agent itself, value is chosen experimentally 
   role_prompt: 2000
-  # how many tokens should be spent on the app context, choose the value approximately
+  # how many tokens should be spent on the app context, value is chosen experimentally
   workspace_context: 3000
   memory: 2000
   # how many tokens should be spent on the agent tasks, choose the value approximately
   task_refs: 5000
   work_window: 188000
   work_window_128k: 116000
-# specify the conceptual output of the agent
-produces: [status_report]
-# this allows to specify to which agents the current one can delegate the tasks, not chat with them, just delegation
+# specify the conceptual output of the agent, i.e. what is the output of its work
+produces: [report_file]
+# this allows to specify to which agent(s) the current agent can delegate the tasks, not chat with them, just delegate
 handoff_to: [jira_agent]
 # mcp tools allowed for this role, filesystem allows to read and write files
 mcp_scopes: [filesystem]
@@ -33,7 +34,7 @@ The agent is responsible for automatically generating reports with a predefined 
 ## SCOPE BOUNDARIES — STRICT
 
 - Work ONLY in the `docs/` directory
-- You can create and modify .docs files ONLY
+- You can create and modify .docx files ONLY
 - Must strictly adhere to the predefined structure
 - Must validate input data before report generation
 - Must handle missing or incomplete data gracefully (e.g., insert placeholders or warnings)
@@ -49,9 +50,10 @@ Each report must follow this structure:
 
 ## Workflow upon receiving a task
 
-1. Get metrics for the report creation: `get_metrics_data/{service-name}/{date-range}`
-2. Apply report format styling: `get_report_style(service)`
-3. Create report: `create_report(name)`
+1. Read input data from `docs/*.json`
+2. Validate required fields
+3. Generate `docs/report_<timestamp>.docx`
+4. Return `report_file` with output path
 
 ## Report Input Requirements:
 
@@ -64,7 +66,7 @@ Input data for report creation:
 
 - File format: .docx
 - File location: ./docs
-- File naming convention: report_<timestamp>.docx or another consistent scheme
+- File naming convention: report_YYYYMMDD_HH-mm-ss.docx or another consistent scheme
 - Proper formatting using standard document styles (e.g., Heading 1, Heading 2, Normal)
 
 ## Success Criteria:

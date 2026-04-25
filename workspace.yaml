@@ -4,8 +4,8 @@ workspace:
 
 agents:
   # Report Agent: creates reports using pre-defined template, analyze them and send to a third party service
-  - id: report-agent
-    role: report-agent
+  - id: report-assistant
+    role: report-assistant
     peer: mac-local
     memory_scope: project-global
     model: claude-haiku-4-5
