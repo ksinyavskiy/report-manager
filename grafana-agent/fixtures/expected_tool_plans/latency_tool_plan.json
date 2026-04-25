@@ -1,0 +1,32 @@
+[
+  {
+    "tool": "list_available_metrics",
+    "args": {
+      "service": "checkout-service"
+    }
+  },
+  {
+    "tool": "fetch_metrics",
+    "args": {
+      "service": "checkout-service",
+      "metrics": [
+        "request_latency_p95",
+        "request_latency_p99"
+      ],
+      "from": "2026-04-25T11:00:00Z",
+      "to": "2026-04-25T12:00:00Z"
+    }
+  },
+  {
+    "tool": "normalize_metrics",
+    "args": {
+      "service": "checkout-service"
+    }
+  },
+  {
+    "tool": "validate_metric_payload",
+    "args": {
+      "service": "checkout-service"
+    }
+  }
+]

@@ -1,0 +1,51 @@
+{
+  "request_id": "req-001",
+  "agent": "grafana-agent",
+  "status": "success",
+  "service": "checkout-service",
+  "time_range": {
+    "from": "2026-04-25T11:00:00Z",
+    "to": "2026-04-25T12:00:00Z"
+  },
+  "metric_intent": "latency",
+  "selected_metrics": [
+    "request_latency_p95",
+    "request_latency_p99"
+  ],
+  "metrics": [
+    {
+      "name": "request_latency_p95",
+      "unit": "milliseconds",
+      "points": [
+        {
+          "timestamp": "2026-04-25T11:00:00Z",
+          "value": 120.0
+        },
+        {
+          "timestamp": "2026-04-25T11:10:00Z",
+          "value": 850.0
+        }
+      ]
+    },
+    {
+      "name": "request_latency_p99",
+      "unit": "milliseconds",
+      "points": [
+        {
+          "timestamp": "2026-04-25T11:00:00Z",
+          "value": 180.0
+        },
+        {
+          "timestamp": "2026-04-25T11:10:00Z",
+          "value": 1200.0
+        }
+      ]
+    }
+  ],
+  "warnings": [],
+  "error": null,
+  "handoff": {
+    "next_agent": "metric-analyzer-agent",
+    "reason": "metrics_ready_for_analysis"
+  }
+}

@@ -1,0 +1,20 @@
+[project]
+name = "grafana-agent-learning-mvp"
+version = "0.1.0"
+description = "Learning MVP for a Grafana Agent contract and tool-calling flow."
+requires-python = ">=3.11"
+dependencies = [
+  "jsonschema>=4.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.setuptools]
+packages = []

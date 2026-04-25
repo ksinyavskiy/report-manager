@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GrafanaAgentInput",
+  "type": "object",
+  "required": ["request_id", "task", "context"],
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source": {
+      "type": "string",
+      "enum": ["ui", "orchestrator", "test"]
+    },
+    "task": {
+      "type": "string",
+      "minLength": 1
+    },
+    "context": {
+      "type": "object",
+      "required": ["now"],
+      "properties": {
+        "now": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "default_service": {
+          "type": ["string", "null"]
+        },
+        "default_time_range_minutes": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 60
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

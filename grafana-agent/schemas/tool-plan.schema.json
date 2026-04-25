@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GrafanaAgentToolPlan",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["tool", "args"],
+    "properties": {
+      "tool": {
+        "type": "string",
+        "enum": [
+          "list_available_metrics",
+          "fetch_metrics",
+          "normalize_metrics",
+          "validate_metric_payload"
+        ]
+      },
+      "args": {
+        "type": "object"
+      }
+    },
+    "additionalProperties": false,
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "tool": {
+              "const": "list_available_metrics"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "args": {
+              "$ref": "#/$defs/serviceArgs"
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "tool": {
+              "const": "fetch_metrics"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "args": {
+              "$ref": "#/$defs/fetchMetricsArgs"
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "tool": {
+              "const": "normalize_metrics"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "args": {
+              "$ref": "#/$defs/serviceArgs"
+            }
+          }
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "tool": {
+              "const": "validate_metric_payload"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "args": {
+              "$ref": "#/$defs/serviceArgs"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "$defs": {
+    "serviceArgs": {
+      "type": "object",
+      "required": ["service"],
+      "properties": {
+        "service": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "fetchMetricsArgs": {
+      "type": "object",
+      "required": ["service", "metrics", "from", "to"],
+      "properties": {
+        "service": {
+          "type": "string",
+          "minLength": 1
+        },
+        "metrics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "from": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "to": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

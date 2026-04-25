@@ -1,0 +1,8 @@
+[
+  {
+    "tool": "list_available_metrics",
+    "args": {
+      "service": "payment-service"
+    }
+  }
+]

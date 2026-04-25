@@ -1,0 +1,17 @@
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+dist/
+build/
+*.egg-info/
+.env
+*.pyc
+.coverage
+htmlcov/
+
+# Large local planning drafts. The committed source of truth is
+# PROJECT_CONTEXT.md, AGENTS.md, README.md, and docs/.
+01_ai_project_rules_and_setup.md
+02_grafana_agent_detailed_plan.md

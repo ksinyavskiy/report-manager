@@ -1,0 +1,32 @@
+[
+  {
+    "tool": "list_available_metrics",
+    "args": {
+      "service": "checkout-service"
+    }
+  },
+  {
+    "tool": "fetch_metrics",
+    "args": {
+      "service": "checkout-service",
+      "metrics": [
+        "error_rate",
+        "http_5xx_count"
+      ],
+      "from": "2026-04-25T11:30:00Z",
+      "to": "2026-04-25T12:00:00Z"
+    }
+  },
+  {
+    "tool": "normalize_metrics",
+    "args": {
+      "service": "checkout-service"
+    }
+  },
+  {
+    "tool": "validate_metric_payload",
+    "args": {
+      "service": "checkout-service"
+    }
+  }
+]
