@@ -1,39 +1,67 @@
 # Report Manager
 
-Multi-agent AI platform for reports management. A group of specialized AI agents collaborates on external tools for metrics gathering using NATS JetStream for messaging and Workspace MCP Server for external tools connection.
+Report Manager is an AI-driven application that automates collection, analysis, and reporting of technical metrics from third-party systems such as Grafana, AWS CloudWatch, and similar observability platforms.
 
-## Key Components
+It helps teams create new reports and work with historical ones across selected date ranges, so they can understand service behavior over time. For example, during performance testing or incident investigation, teams can compare current metrics (such as latency or spikes in HTTP 500 errors) with previous report baselines to quickly identify when degradation started, how significant the change is, and whether it is part of a long-term trend.
 
-| Component | Language | Description |
-|-----------|---------|-------------|
-| [agent-factory](./agent-factory) | Python  | CLI for agent lifecycle management, orchestration, and task routing |
-| [workspace-server](./workspace-server) | TypeScript | MCP server (port 3100) with REST API, WebSocket relay, and event persistence |
+## Current Scope
 
-### Prerequisites
+- Maven project with Java 17
+- CLI implemented with `picocli`
+- Root command: `agent-factory`
+- Implemented subcommand: `run`
+- Agent lookup source: `workspace.yaml` (`agents[].id`)
 
-- **Node.js** >= 20
-- **NATS Server** with JetStream enabled
-- **Anthropic API key** (`ANTHROPIC_API_KEY` environment variable)
-### 1. Clone and Build
+## Project Structure
 
-```bash
-git clone https://github.com/ksinyavskiy/report-manager.git
-cd report-manager
+- `src/main/java/com/example/reportmanager/cli` - CLI entrypoint and commands
+- `src/main/java/com/example/reportmanager/service` - agent execution services
+- `workspace.yaml` - workspace and agent definitions
 
-# Build agent-factory
-cd agent-factory
-go build -o agent-factory .
-cd ..
-```
+## Prerequisites
 
-### 2. Start NATS
+- JDK 17+
+- Maven 3.9+
+
+## Build
 
 ```bash
-docker run -d --name nats -p 4222:4222 nats:latest -js
+mvn clean package
 ```
 
-### 3. Launch Everything
+## Run CLI
+
+Run the `run` subcommand by agent id:
 
 ```bash
-./agent-factory/agent-factory up
+mvn -q exec:java -Dexec.mainClass=com.example.reportmanager.cli.AgentFactoryCli -Dexec.args="run --id report-assistant"
 ```
+
+This command uses the default workspace path (`workspace.yaml`) from the current working directory.
+
+Use a custom workspace file path:
+
+```bash
+mvn -q exec:java -Dexec.mainClass=com.example.reportmanager.cli.AgentFactoryCli -Dexec.args="run --id report-assistant --workspace ./workspace.yaml"
+```
+
+Use `--workspace` when the file is not in the current directory or has a different name.
+
+## Command Reference
+
+```bash
+agent-factory run --id <agent-id> [--workspace <path>]
+```
+
+- `--id` (required): agent identifier from `workspace.yaml`
+- `--workspace` (optional): path to workspace file, defaults to `workspace.yaml`
+
+## Expected Behavior
+
+When an agent is found, the CLI currently prints basic agent metadata:
+
+- agent id
+- role
+- peer
+
+If the workspace file cannot be read, or the agent id does not exist, the command fails with an error.
