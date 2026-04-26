@@ -7,7 +7,7 @@ It helps teams create new reports and work with historical ones across selected 
 ## Current Scope
 
 - Maven project with Java 17
-- CLI implemented with `picocli`
+- CLI implemented with `picocli` (see https://picocli.info/)
 - Root command: `agent-factory`
 - Implemented subcommand: `run`
 - Agent lookup source: `workspace.yaml` (`agents[].id`)
