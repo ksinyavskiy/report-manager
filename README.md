@@ -26,7 +26,7 @@ It helps teams create new reports and work with historical ones across selected 
 ## Build
 
 ```bash
-mvn clean package
+mvn clean install
 ```
 
 ## Run CLI
